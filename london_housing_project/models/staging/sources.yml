@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: property_market
+    description: "Raw housing transaction data sourced from the HM Land Registry Price Paid datasets."
+    database: property_data      # Matches your DuckDB file name prefix
+    schema: main                 # DuckDB's default schema name
+    tables:
+      - name: raw_land_registry
+        description: "The raw, unheadered CSV dump of price paid property transactions in England and Wales."
+        
+        # Adding a light data contract / testing setup here makes your GitHub repo look highly professional
+        columns:
+          - name: coloumn00
+            description: "The transaction unique identifier (automatically generated positional column name)."
+            tests:
+              - unique
+              - not_null
+          - name: coloumn01
+            description: "The raw price paid for the property."
+            tests:
+              - not_null
+          - name: coloumn02
+            description: "The full postcode string."
+            tests:
+              - not_null
+      - name: raw_tfl_stations
+        description: "Standard map of London Tube stations and rail stations with coordinates."
