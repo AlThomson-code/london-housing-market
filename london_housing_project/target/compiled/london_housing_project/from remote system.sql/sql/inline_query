@@ -1,0 +1,1 @@
+SELECT COUNT(*) from "property_data"."main"."fct_property_station_distance" where closest_station_distance_km is null

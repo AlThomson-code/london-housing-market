@@ -1,6 +1,9 @@
-with source as (
 
-    select * from {{ source('property_market', 'raw_postcode_lookup') }}
+  
+  create view "property_data"."main"."stg_postcode_lookup__dbt_tmp" as (
+    with source as (
+
+    select * from "property_data"."main"."raw_postcode_lookup"
 
 ),
 
@@ -18,3 +21,4 @@ select
 
 select * 
 from cleaned
+  );

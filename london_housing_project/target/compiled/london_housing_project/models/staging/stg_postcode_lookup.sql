@@ -1,6 +1,6 @@
 with source as (
 
-    select * from {{ source('property_market', 'raw_postcode_lookup') }}
+    select * from "property_data"."main"."raw_postcode_lookup"
 
 ),
 

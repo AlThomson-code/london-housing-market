@@ -1,6 +1,9 @@
-with source as (
 
-    select * from {{ source('property_market', 'raw_land_registry') }}
+  
+  create view "property_data"."main"."stg_land_registry__dbt_tmp" as (
+    with source as (
+
+    select * from "property_data"."main"."raw_land_registry"
 
 ),
 
@@ -49,10 +52,11 @@ filtered_london as (
     pl.longitude
 
     from filtered_london as l
-    left join {{ ref('stg_postcode_lookup') }} as pl
+    left join "property_data"."main"."stg_postcode_lookup" as pl
     on l.clean_postcode = pl.postcode_key
 
 
 )
 
 select * from geolocated
+  );
