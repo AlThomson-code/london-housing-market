@@ -19,21 +19,22 @@ stations as (
 
 ),
 
--- Calculate the distance between every property sale and every station
+-- Cross join to evaluate every property against every station
 cross_joined as (
 
     select
         p.transaction_id,
         p.price,
         p.transfer_date,
-        p.postcode,
+        p.clean_postcode as postcode,
+        p.borough,
         p.property_type_code,
         s.station_id,
         s.station_name,
         s.fare_zone,
         s.network_type,
         
-        -- Haversine Distance Formula in pure SQL (returns distance in kilometers)
+        -- Haversine formula in DuckDB SQL (returns distance in km)
         6371 * acos(
             cos(radians(p.latitude)) 
             * cos(radians(s.latitude)) 
@@ -44,10 +45,13 @@ cross_joined as (
 
     from properties p
     cross join stations s
+    -- Filter out rows missing geocodes to prevent mathematical errors
+    where p.latitude is not null 
+      and s.latitude is not null
 
 ),
 
--- Find only the single closest station for each individual transaction
+-- Rank stations by proximity for each property sale
 ranked_distances as (
 
     select
@@ -60,7 +64,7 @@ ranked_distances as (
 
 )
 
--- Filter for the absolute closest station
+-- Select the absolute closest transit point
 select
     transaction_id,
     price,

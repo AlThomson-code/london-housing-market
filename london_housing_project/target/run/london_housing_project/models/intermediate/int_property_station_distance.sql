@@ -1,30 +1,34 @@
-with properties as (
 
-    select * from {{ ref('stg_land_registry') }}
+  
+  create view "property_data"."main"."int_property_station_distance__dbt_tmp" as (
+    with properties as (
+
+    select * from "property_data"."main"."stg_land_registry"
 
 ),
 
 stations as (
 
-    select * from {{ ref('stg_tfl_stations') }}
+    select * from "property_data"."main"."stg_tfl_stations"
 
 ),
 
--- Calculate the distance between every property sale and every station
+-- Cross join to evaluate every property against every station
 cross_joined as (
 
     select
         p.transaction_id,
         p.price,
         p.transfer_date,
-        p.postcode,
+        p.clean_postcode as postcode,
+        p.borough,
         p.property_type_code,
         s.station_id,
         s.station_name,
         s.fare_zone,
         s.network_type,
         
-        -- Haversine Distance Formula in pure SQL (returns distance in kilometers)
+        -- Haversine formula in DuckDB SQL (returns distance in km)
         6371 * acos(
             cos(radians(p.latitude)) 
             * cos(radians(s.latitude)) 
@@ -35,10 +39,13 @@ cross_joined as (
 
     from properties p
     cross join stations s
+    -- Filter out rows missing geocodes to prevent mathematical errors
+    where p.latitude is not null 
+      and s.latitude is not null
 
 ),
 
--- Find only the single closest station for each individual transaction
+-- Rank stations by proximity for each property sale
 ranked_distances as (
 
     select
@@ -51,7 +58,7 @@ ranked_distances as (
 
 )
 
--- Filter for the absolute closest station
+-- Select the absolute closest transit point
 select
     transaction_id,
     price,
@@ -65,3 +72,4 @@ select
     round(distance_to_station_km, 3) as closest_station_distance_km
 from ranked_distances
 where rank_order = 1
+  );

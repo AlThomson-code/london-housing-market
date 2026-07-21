@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: int_property_station_distance
+    description: "Fact table calculating the distance (in meters/miles) between London residential properties and nearest transit stations."
+    columns:
+      - name: transaction_id
+        description: "Unique Identifier for Land Registry transaction."
+        tests:
+          - unique
+          - not_null
+
+      - name: price
+        description: "Price of the property in the Land Registry transaction."
+        tests:
+          - not_null
+
+      - name: station_id
+        description: "Foreign key referencing dim_stations."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_stations')
+              field: station_id
+
+      - name: closest_station_distance_km
+        description: "Straight-line or walk-network distance between property and station."
+     

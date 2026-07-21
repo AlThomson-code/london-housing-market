@@ -1,12 +1,12 @@
 with properties as (
 
-    select * from "property_data"."main"."stg_land_registry"
+    select * from {{ ref('stg_land_registry') }}
 
 ),
 
 stations as (
 
-    select * from "property_data"."main"."stg_tfl_stations"
+    select * from {{ ref('stg_tfl_stations') }}
 
 ),
 
