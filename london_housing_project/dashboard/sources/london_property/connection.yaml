@@ -1,0 +1,5 @@
+# This file was automatically generated
+name: london_property
+type: duckdb
+options:
+  filename: ../../../property_data.duckdb

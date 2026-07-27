@@ -1,0 +1,1 @@
+select * from main.mart_property_transit_accessibility
