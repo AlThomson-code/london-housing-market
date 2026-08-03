@@ -1,3 +1,6 @@
+deployment:
+  basePath: /london-housing-market
+
 appearance:
   default: system
   switcher: true

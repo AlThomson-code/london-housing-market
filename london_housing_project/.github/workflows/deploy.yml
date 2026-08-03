@@ -1,0 +1,83 @@
+name: Deploy Evidence report
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Refresh with the latest Price Paid Data on the 1st of every month
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download current-year Price Paid Data
+        run: |
+          mkdir -p data
+          year=$(date +%Y)
+          curl -sSL -f -o "data/pp-${year}.csv" \
+            "https://price-paid-data.publicdata.landregistry.gov.uk/pp-${year}.csv"
+
+      - name: Load raw data into DuckDB
+        run: |
+          python src/ingest.py
+          python src/download_geocodes.py
+
+      - name: Run dbt build
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}
+        run: dbt build
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: dashboard/package-lock.json
+
+      - name: Install Evidence dependencies
+        working-directory: dashboard
+        run: npm ci
+
+      - name: Build Evidence report
+        working-directory: dashboard
+        run: |
+          npm run sources
+          npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'dashboard/build'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

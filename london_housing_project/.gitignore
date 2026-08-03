@@ -1,3 +1,4 @@
 *.duckdb
 *.duckdb.wal
-data/
+data/*
+!data/stations.csv

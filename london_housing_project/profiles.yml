@@ -1,0 +1,7 @@
+london_housing_project:
+  target: ci
+  outputs:
+    ci:
+      type: duckdb
+      path: property_data.duckdb
+      threads: 4
