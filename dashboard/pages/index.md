@@ -6,7 +6,7 @@
 
 ```sql kpi_data
 select 
-    count(*) as total_properties,
+    cast(count(*) as int) as total_properties,
     round(avg(price), 0) as avg_price,
     round(avg(commuter_score), 1) as avg_commuter_score,
     round(avg(closest_station_distance_km), 2) as avg_distance
@@ -40,7 +40,7 @@ where borough is not null
 <!-- EXECUTIVE SUMMARY BANNER -->
 <div class="p-5 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 mb-8">
     <h3 class="text-sm font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 mb-1">
-        Key Executive Finding
+        Key Finding
     </h3>
     <p class="text-sm text-emerald-900 dark:text-emerald-200 leading-relaxed">
         While proximity to TfL stations commands a premium in central boroughs, select Outer London boroughs deliver superior transit access per pound spent. Outer regions achieve up to <strong>3x higher commuter scores per £100k</strong> compared to central prime property zones.
