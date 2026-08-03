@@ -259,6 +259,6 @@ order by value_score desc
         Data combined from <strong>Transport for London (TfL) Open Data API</strong> (station coordinates and network topology) and <strong>HM Land Registry Price Paid Data</strong> geocoded against UK Office for National Statistics (ONS) Postcode centroids.
     </p>
     <p class="mt-2">
-        Modeled in dbt &mdash; <a href="/dbt-docs/" rel="external" class="underline hover:text-slate-700 dark:hover:text-slate-300">browse the model docs and lineage graph</a>.
+        Modeled in dbt &mdash; <a href="[/dbt-docs/](https://althomson-code.github.io/london-housing-market/dbt-docs/)" rel="external" class="underline hover:text-slate-700 dark:hover:text-slate-300">browse the model docs and lineage graph</a>.
     </p>
 </div>
