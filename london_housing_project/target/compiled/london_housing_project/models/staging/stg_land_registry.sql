@@ -3,7 +3,6 @@ with source as (
     select * from "property_data"."main"."raw_land_registry"
 
 ),
-
 renamed_and_cast as (
 
     select
@@ -12,23 +11,29 @@ renamed_and_cast as (
         cast(column01 as integer) as price,
         cast(column02 as timestamp) as transfer_date,
         
-        -- 2. Location details (Crucial for the TfL mapping)
+        -- 2. Location details (Crucial for TfL mapping)
         upper(trim(cast(column03 as string))) as postcode,
 
-        -- remove shitespace in the mideel
+        -- Remove whitespace in the middle
         upper(replace(cast(column03 as string), ' ', '')) as clean_postcode,
         
         -- 3. Property Attributes
         cast(column04 as string) as property_type_code,
         cast(column05 as string) as is_new_build_code,
         cast(column06 as string) as duration_code, 
+
+        -- format boroughs as title case
         
-        -- 4. Address Specifics
+(
+            select list_aggr(
+                [upper(x[1]) || lower(x[2:]) for x in string_split(trim(cast(column11 as string)), ' ')], 
+                'string_agg', 
+                ' '
+            )
+        ) as borough,
 
-        upper(trim(cast(column11 as string))) as borough,  -- Primary Addressable Object Name
-
-        upper(trim(cast(column13 as string))) as county,
-
+        -- Keeping county in UPPERCASE so your downstream filter (county = 'GREATER LONDON') still works smoothly
+        upper(trim(cast(column13 as string))) as county
 
     from source
 

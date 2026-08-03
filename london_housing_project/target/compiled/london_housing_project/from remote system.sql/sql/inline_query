@@ -1,1 +1,1 @@
-SELECT * FROM "property_data"."main"."fct_property_station_distance"
+SELECT borough from stg_land_registry

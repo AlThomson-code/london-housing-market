@@ -5,5 +5,15 @@
         "*.csv": "duckdb.dataFileViewer",
         "*.tsv": "duckdb.dataFileViewer",
         "*.xlsx": "duckdb.dataFileViewer"
-    }
+    },
+    "sqltools.connections": [],
+    "duckdb.defaultDatabase": "property_data",
+    "duckdb.databases": [
+        {
+            "alias": "property_data",
+            "type": "file",
+            "path": "c:\\Users\\alast\\Documents\\projects\\london_housing_project\\property_data.duckdb",
+            "attached": true
+        }
+    ]
 }

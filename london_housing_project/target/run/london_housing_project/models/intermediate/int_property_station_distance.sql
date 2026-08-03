@@ -23,6 +23,8 @@ cross_joined as (
         p.clean_postcode as postcode,
         p.borough,
         p.property_type_code,
+        p.longitude,
+        p.latitude,
         s.station_id,
         s.station_name,
         s.fare_zone,
@@ -69,6 +71,9 @@ select
     station_name,
     fare_zone,
     network_type,
+    borough,
+    latitude,
+    longitude,
     round(distance_to_station_km, 3) as closest_station_distance_km
 from ranked_distances
 where rank_order = 1
