@@ -12,8 +12,8 @@
         {
             "alias": "property_data",
             "type": "file",
-            "path": "c:\\Users\\alast\\Documents\\projects\\property_data.duckdb",
-            "attached": true
+            "path": "c:\\Users\\alast\\Documents\\projects\\london_housing_project\\property_data.duckdb",
+            "attached": false
         }
     ]
 }
