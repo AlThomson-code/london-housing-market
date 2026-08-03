@@ -3,6 +3,7 @@
 An analytics engineering project evaluating London property prices against Transport for London (TfL) transit accessibility, built to demonstrate a full modern data stack: **Python -> DuckDB -> dbt -> Evidence.dev**.
 
 **Live report:** https://althomson-code.github.io/london-housing-market/
+**dbt docs & lineage graph:** https://althomson-code.github.io/london-housing-market/dbt-docs/
 
 ## Stack
 
@@ -49,7 +50,7 @@ npm run dev
 
 ## Deployment
 
-[.github/workflows/deploy.yml](.github/workflows/deploy.yml) runs the full pipeline above end-to-end - download raw data, `dbt build`, `evidence build` - and publishes the static report to GitHub Pages. It runs on every push to `main`, on demand, and on a monthly schedule so the report picks up new Price Paid Data releases automatically.
+[.github/workflows/deploy.yml](.github/workflows/deploy.yml) runs the full pipeline above end-to-end - download raw data, `dbt build`, `dbt docs generate`, `evidence build` - and publishes the static report plus the dbt docs site to GitHub Pages. It runs on every push to `main`, on demand, and on a monthly schedule so the report picks up new Price Paid Data releases automatically.
 
 ## Repo layout
 

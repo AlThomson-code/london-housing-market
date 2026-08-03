@@ -2,3 +2,6 @@
 *.duckdb.wal
 data/*
 !data/stations.csv
+target/
+logs/
+.user.yml
