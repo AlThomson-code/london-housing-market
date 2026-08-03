@@ -43,7 +43,7 @@ where borough is not null
         Key Finding
     </h3>
     <p class="text-sm text-emerald-900 dark:text-emerald-200 leading-relaxed">
-        While proximity to TfL stations commands a premium in central boroughs, select Outer London boroughs deliver superior transit access per pound spent. Outer regions achieve up to <strong>3x higher commuter scores per £100k</strong> compared to central prime property zones.
+        Station proximity doesn't require a prime-central premium. Tower Hamlets, Hackney and Newham sit just as close to a station as Westminster or Kensington &amp; Chelsea, but at a fraction of the price &mdash; delivering <strong>3x higher commuter score per £100k</strong> than those prime boroughs. The real value laggards are outer boroughs with genuinely weak transit coverage: Bexley, Kingston upon Thames and Sutton average 3&ndash;6km from the nearest station.
     </p>
 </div>
 
@@ -78,8 +78,8 @@ order by avg_price asc
         y=avg_price 
         pointName=borough
         tooltipTitle=borough
-        xTitle="Average Distance to Nearest Station (km)"
-        yTitle="Average Property Price (£)"
+        xTitle="Average Distance to Nearest Station (km)  →  Further away from stations"
+        yTitle="↑  Higher sold price  —  Average Property Price (£)"
         yFmt=gbp
         tooltip_fields={['borough', 'avg_price', 'avg_station_distance_km', 'avg_commuter_score']}
     />
@@ -261,6 +261,6 @@ order by value_score desc
         Data combined from <strong>Transport for London (TfL) Open Data API</strong> (station coordinates and network topology) and <strong>HM Land Registry Price Paid Data</strong> geocoded against UK Office for National Statistics (ONS) Postcode centroids.
     </p>
     <p class="mt-2">
-        Modeled in dbt &mdash; <a href="/dbt-docs/" rel="external" class="underline hover:text-slate-700 dark:hover:text-slate-300">browse the model docs and lineage graph</a>.
+        Modeled in dbt &mdash; <a href="https://althomson-code.github.io/london-housing-market/dbt-docs/" rel="external" class="underline hover:text-slate-700 dark:hover:text-slate-300">browse the model docs and lineage graph</a>.
     </p>
 </div>
