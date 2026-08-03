@@ -131,19 +131,21 @@ where latitude is not null
 ```
 
 <Grid cols=4 gap=l class="my-6">
-    <div class="bg-slate-50 dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
-        <div>
+    <div class="min-w-0 bg-slate-50 dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+        <div class="min-w-0">
             <h3 class="text-base font-semibold text-slate-900 dark:text-slate-100 mb-3">
                 Focus Borough
             </h3>
 
-            <Dropdown
-                name=borough
-                data={borough_options}
-                value=borough
-                defaultValue="All"
-                title="Select Region"
-            />
+            <div class="w-full [&_button]:w-full [&_button]:max-w-full [&_button]:justify-between [&_button]:truncate">
+                <Dropdown
+                    name=borough
+                    data={borough_options}
+                    value=borough
+                    defaultValue="All"
+                    title="Select Region"
+                />
+            </div>
         </div>
 
         <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 space-y-2">
@@ -259,6 +261,6 @@ order by value_score desc
         Data combined from <strong>Transport for London (TfL) Open Data API</strong> (station coordinates and network topology) and <strong>HM Land Registry Price Paid Data</strong> geocoded against UK Office for National Statistics (ONS) Postcode centroids.
     </p>
     <p class="mt-2">
-        Modeled in dbt &mdash; <a href="[/dbt-docs/](https://althomson-code.github.io/london-housing-market/dbt-docs/)" rel="external" class="underline hover:text-slate-700 dark:hover:text-slate-300">browse the model docs and lineage graph</a>.
+        Modeled in dbt &mdash; <a href="/dbt-docs/" rel="external" class="underline hover:text-slate-700 dark:hover:text-slate-300">browse the model docs and lineage graph</a>.
     </p>
 </div>

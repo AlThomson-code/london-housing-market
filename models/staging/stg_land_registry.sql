@@ -23,11 +23,14 @@ renamed_and_cast as (
         cast(column06 as string) as duration_code, 
 
         -- format boroughs as title case
-        
+        -- column11 is Town/City (Royal Mail postal town - "LONDON" for most of
+        -- inner London, useless for a borough breakdown). column12 is District,
+        -- which for Greater London addresses is the actual local authority /
+        -- borough (Camden, Hackney, Westminster, ...) - that's the one we want.
 (
             select list_aggr(
-                [upper(x[1]) || lower(x[2:]) for x in string_split(trim(cast(column11 as string)), ' ')], 
-                'string_agg', 
+                [upper(x[1]) || lower(x[2:]) for x in string_split(trim(cast(column12 as string)), ' ')],
+                'string_agg',
                 ' '
             )
         ) as borough,
