@@ -170,26 +170,38 @@ where latitude is not null
     </div>
 
     <div style="grid-column: span 3;" class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm">
-        <BaseMap title="London Property Listings & TfL Network" height=500>
-            <Points 
-                data={stations_data} 
-                lat=latitude 
-                long=longitude 
-                pointName=station_name
-                color="#000000" 
-                size=4
-            />
+        <!-- Evidence's default CARTO basemap now requires an API key, so use Esri's keyless light-grey tiles -->
+        <BaseMap
+            title="London Property Listings & TfL Network"
+            height=500
+            basemap={'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'}
+            attribution="Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ"
+        >
             <Points 
                 data={map_data} 
                 lat=latitude 
                 long=longitude 
                 value=commuter_score 
                 colorPalette={['#ef4444', '#f59e0b', '#10b981']}
+                size=3
+                borderWidth=0
+                opacity=0.7
                 tooltip={[
                     {id: 'price', title: 'Property Price', fmt: 'gbp'},
                     {id: 'commuter_score', title: 'Commuter Score'},
                     {id: 'borough', title: 'Borough'}
                 ]}
+            />
+            <!-- Stations drawn last so they sit on top of the property points -->
+            <Points 
+                data={stations_data} 
+                lat=latitude 
+                long=longitude 
+                pointName=station_name
+                color="#000000" 
+                size=3
+                borderWidth=0
+                legend=false
             />
         </BaseMap>
     </div>
